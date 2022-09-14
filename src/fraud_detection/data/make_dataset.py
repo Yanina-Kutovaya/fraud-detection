@@ -13,7 +13,7 @@ TRAIN_DATA_URL = 'https://storage.yandexcloud.net/credit-cards-data/train.parque
 FILE_NAME = 'train.parquet'
 
 
-def load_data(datapath: Optional[str] = None) -> pyspark.DataFrame:    
+def load_data(datapath: Optional[str] = None) -> pyspark.sql.DataFrame:    
     if datapath is None:
         datapath = TRAIN_DATA_URL
 
@@ -25,7 +25,7 @@ def load_data(datapath: Optional[str] = None) -> pyspark.DataFrame:
     )
     spark.sparkContext.addFile(datapath)
     df_train = spark.read.parquet(
-        SparkFiles.get(), header=True, inferSchema=True
+        SparkFiles.get(FILE_NAME), header=True, inferSchema=True
     ).repartition(4)
 
     return df_train   
