@@ -50,7 +50,7 @@ max_thresholds = {
 binary_1 = ['V26', 'V286']
 
 
-def get_inference_pipeline():
+def GBTClassifier_pipeline_v1():
     logger.info("Building an inference pipeline ...")  
     discrete_to_binary = DiscreteToBinaryTransformer(
         inputCols=binary_1,
