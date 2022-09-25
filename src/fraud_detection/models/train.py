@@ -2,7 +2,7 @@ import logging
 import pyspark.ml.feature as MF
 from pyspark.ml import Pipeline
 from pyspark.ml.classification import GBTClassifier
-from custom_transformers import (
+from src.fraud_detection.features.custom_transformers import (
     DiscreteToBinaryTransformer,
     ContinuousOutliersCapper,
     TimeFeaturesGenerator,
