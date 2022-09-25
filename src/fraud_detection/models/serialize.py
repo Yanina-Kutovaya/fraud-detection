@@ -23,6 +23,7 @@ def load(filename: str, path: str = 'default') -> PipelineModel:
 
     logger.info(f'Loading model from {filepath}')
     return PipelineModel.load(filepath)  
+    
 
 
 def models_path() -> str:
