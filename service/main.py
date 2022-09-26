@@ -1,10 +1,13 @@
-"""FastAPI Titanic model inference example"""
+"""FastAPI Credit Cards Fraud Detection model inference"""
 
-from typing import Optional
+import sys
 import os
+sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.getcwd(),'..'))
 
 import pandas as pd
 import numpy as np
+from typing import Optional
 
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
@@ -16,6 +19,7 @@ from pydantic import BaseModel
 from pyspark.ml.pipeline import PipelineModel
 
 from src.fraud_detection.models.serialize import load
+
 
 app = FastAPI()
 app.add_middleware(PrometheusMiddleware)
