@@ -9,7 +9,7 @@ __all__ = ['load_train_dataset']
 
 
 APP_NAME = 'data_ingestion'
-TRAIN_DATA_URL = 'https://storage.yandexcloud.net/credit-cards-data/train.parquet'
+TRAIN_DATA_URL = 'https://storage.yandexcloud.net/airflow-cc-input/train.parquet'
 FILE_NAME = 'train.parquet'
 
 
