@@ -6,9 +6,13 @@ sys.path.append(os.path.join(os.getcwd(),'..'))
 from fastapi.testclient import TestClient
 
 from src.fraud_detection.data.make_dataset import load_data
+from src.fraud_detection.features import custom_transformers
 from src.fraud_detection.models.train import GBTClassifier_pipeline_v1
 
 from main import app, Model 
+
+import findspark
+findspark.init() 
 
 client = TestClient(app)
 
