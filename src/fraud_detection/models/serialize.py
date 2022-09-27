@@ -1,6 +1,13 @@
+import sys
 import os
+sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.getcwd(),'..'))
+
 import logging
 from pyspark.ml.pipeline import PipelineModel
+
+from src.fraud_detection.features import custom_transformers
+
 
 __all__ = ['store', 'load']
 
