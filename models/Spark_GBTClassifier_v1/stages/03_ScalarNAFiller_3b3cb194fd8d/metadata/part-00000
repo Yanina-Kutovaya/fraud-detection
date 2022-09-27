@@ -1,0 +1,1 @@
+{"class":"custom_transformers.ScalarNAFiller","timestamp":1661869815963,"sparkVersion":"3.3.0","uid":"ScalarNAFiller_3b3cb194fd8d","paramMap":{"inputCols":["V286","V26","weekdays","minutes"],"outputCols":["V286","V26","weekdays","minutes"],"filler":-999.0},"defaultParamMap":{"filler":null,"outputCol":"ScalarNAFiller_3b3cb194fd8d__output"}}

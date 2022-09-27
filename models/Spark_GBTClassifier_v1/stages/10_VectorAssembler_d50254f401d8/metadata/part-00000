@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1661869819005,"sparkVersion":"3.3.0","uid":"VectorAssembler_d50254f401d8","paramMap":{"outputCol":"continuous_assembled","inputCols":["addr1","addr2","C7","V97","V183","V236","V279","V280","V290","V306","V308","V317"]},"defaultParamMap":{"outputCol":"VectorAssembler_3d208cb0b444__output","handleInvalid":"error"}}

@@ -1,0 +1,1 @@
+{"class":"custom_transformers.ContinuousOutliersCapper","timestamp":1661869815235,"sparkVersion":"3.3.0","uid":"ContinuousOutliersCapper_905d63932710","paramMap":{"maximum":[540.0,87.0,10.0,7.0,4.0,3.0,5.0,9.0,3.0,938.0,1649.5,1762.0],"inputCols":["addr1","addr2","C7","V97","V183","V236","V279","V280","V290","V306","V308","V317"]},"defaultParamMap":{}}

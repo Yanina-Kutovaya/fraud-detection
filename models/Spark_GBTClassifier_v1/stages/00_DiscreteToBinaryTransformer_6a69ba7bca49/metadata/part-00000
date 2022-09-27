@@ -1,0 +1,1 @@
+{"class":"custom_transformers.DiscreteToBinaryTransformer","timestamp":1661869814720,"sparkVersion":"3.3.0","uid":"DiscreteToBinaryTransformer_6a69ba7bca49","paramMap":{"inputCols":["V26","V286"],"outputCols":["V26","V286"]},"defaultParamMap":{"outputCol":"DiscreteToBinaryTransformer_6a69ba7bca49__output"}}
