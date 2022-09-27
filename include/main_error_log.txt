@@ -1,0 +1,34 @@
+ubuntu@vm-1:~/fraud-detection/service$ uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['/home/ubuntu/fraud-detection/service']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3218] using StatReload
+
+22/09/26 19:39:38 WARN Utils: Your hostname, vm-1 resolves to a loopback address: 127.0.1.1; using 192.168.0.18 instead (on interface eth0)
+22/09/26 19:39:38 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+22/09/26 19:39:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+INFO:     Started server process [3220]
+INFO:     Waiting for application startup.
+ERROR:    Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/starlette/routing.py", line 645, in lifespan
+    async with self.lifespan_context(app):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/starlette/routing.py", line 540, in __aenter__        
+    await self._router.startup()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/starlette/routing.py", line 624, in startup
+    handler()
+  File "/home/ubuntu/fraud-detection/service/./main.py", line 434, in load_model
+    Model.pipeline = load(MODEL)
+  File "/home/ubuntu/fraud-detection/service/../src/fraud_detection/models/serialize.py", line 33, in load     
+    return PipelineModel.load(filepath)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pyspark/ml/util.py", line 353, in load
+    return cls.read().load(path)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pyspark/ml/pipeline.py", line 286, in load
+    uid, stages = PipelineSharedReadWrite.load(metadata, self.sc, path)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pyspark/ml/pipeline.py", line 439, in load
+    stage: "PipelineStage" = DefaultParamsReader.loadParamsInstance(stagePath, sc)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pyspark/ml/util.py", line 635, in loadParamsInstance  
+    py_type: Type[RL] = DefaultParamsReader.__get_class(pythonClassName)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/pyspark/ml/util.py", line 539, in __get_class
+    m = __import__(module)
+ModuleNotFoundError: No module named 'custom_transformers'
