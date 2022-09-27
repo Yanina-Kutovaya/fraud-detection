@@ -18,6 +18,7 @@ from starlette_exporter import PrometheusMiddleware, handle_metrics
 from pydantic import BaseModel
 from pyspark.ml.pipeline import PipelineModel
 
+from src.fraud_detection.features import custom_transformers
 from src.fraud_detection.models.serialize import load
 
 
@@ -463,4 +464,4 @@ def predict(transaction_id: int, transaction: Transaction):
         probability = predictions.select('prob').collect()[0][0]
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    return {'TransactionID': TransactionID, 'cards1': card1, 'probability': round(probability, 4)}
+    return {'TransactionID': TransactionID, 'cards1': card1, 'probability': probability}
