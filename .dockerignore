@@ -1,6 +1,7 @@
 /notebook
 /reports
 /tests
+/include
 *.md
 .git
 .gitignore
