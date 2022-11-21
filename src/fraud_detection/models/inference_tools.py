@@ -15,13 +15,13 @@ def adjust_predictions(predictions):
     return predictions 
 
 
-def get_fraud_probability(predictions):
+def get_params(predictions):
     predictions = adjust_predictions(predictions)
     TransactionID = predictions.select('TransactionID').collect()[0][0]
     card1 = predictions.select('card1').collect()[0][0]
     probability = predictions.select('prob').collect()[0][0]
 
-    return probability
+    return TransactionID, card1, probability
 
 
 def get_k_suspicious_cards(predictions, k=50):
