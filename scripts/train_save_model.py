@@ -24,7 +24,7 @@ def main():
         "--model",
         required=False,
         default='GBTClassifier_pipeline_v1',
-        help="model name (must be importable from titanic.models.train module)",
+        help="model name (must be importable from fraud_detection.models.train module)",
     )
     argparser.add_argument(
         "-d",
