@@ -9,9 +9,9 @@ from typing import NoReturn
 import pyspark
 from pyspark.ml import Pipeline
 
-from fraud_detection.data.make_dataset import load_data
-from fraud_detection.models import train
-from fraud_detection.models.serialize import store
+from src.fraud_detection.data.make_dataset import load_data
+from src.fraud_detection.models import train
+from src.fraud_detection.models.serialize import store
 
 
 logger = logging.getLogger()
