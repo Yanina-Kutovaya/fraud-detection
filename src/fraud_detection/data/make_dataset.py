@@ -9,13 +9,17 @@ __all__ = ['load_train_dataset']
 
 
 APP_NAME = 'data_ingestion'
-TRAIN_DATA_URL = 'https://storage.yandexcloud.net/airflow-cc-input/train.parquet'
+BACKET_URL = 'https://storage.yandexcloud.net/airflow-cc-input/'
 FILE_NAME = 'train.parquet'
 
-
-def load_data(datapath: Optional[str] = None) -> pyspark.sql.DataFrame:    
+def load_data(
+    file_name: Optional[str] = None,
+    datapath: Optional[str] = None    
+    ) -> pyspark.sql.DataFrame:  
+    if file_name is None:
+        file_name = FILE_NAME  
     if datapath is None:
-        datapath = TRAIN_DATA_URL
+        datapath = BACKET_URL + file_name    
 
     logging.info(f'Reading dataset from {datapath}')
     spark = (
@@ -24,8 +28,8 @@ def load_data(datapath: Optional[str] = None) -> pyspark.sql.DataFrame:
             .getOrCreate()
     )
     spark.sparkContext.addFile(datapath)
-    df_train = spark.read.parquet(
-        SparkFiles.get(FILE_NAME), header=True, inferSchema=True
+    df = spark.read.parquet(
+        SparkFiles.get(file_name), header=True, inferSchema=True
     ).repartition(4)
 
-    return df_train   
+    return df

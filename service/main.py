@@ -7,7 +7,7 @@ sys.path.append(os.path.join(os.getcwd(),'..'))
 
 import pandas as pd
 import numpy as np
-from typing import Optional
+from typing import Optional, List
 
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
@@ -20,6 +20,9 @@ from pyspark.ml.pipeline import PipelineModel
 
 from src.fraud_detection.features import custom_transformers
 from src.fraud_detection.models.serialize import load
+from src.fraud_detection.models.inference_tools import (
+    get_params, get_k_suspicious_cards
+)
 
 
 app = FastAPI()
@@ -429,6 +432,10 @@ class Transaction(BaseModel):
     V339: Optional[float] = None
 
 
+class TransactionList(BaseModel):
+    transactions: List[Transaction]
+
+
 @app.on_event('startup')
 def load_model():
     Model.pipeline = load(MODEL)
@@ -448,20 +455,25 @@ def predict(transaction_id: int, transaction: Transaction):
         raise HTTPException(status_code=503, detail='No model loaded')
     try:        
         df = spark.createDataFrame(data)
-        predictions = Model.pipeline.transform(df)
-
-        def extract_prob(v):
-            try:
-                return float(v[1])  
-            except ValueError:
-                return None
-        extract_prob_udf = F.udf(extract_prob, DoubleType())
-        predictions = predictions.withColumn(
-            'prob', extract_prob_udf(F.col('probability'))
-        )
-        TransactionID = predictions.select('TransactionID').collect()[0][0]
-        card1 = predictions.select('card1').collect()[0][0]
-        probability = predictions.select('prob').collect()[0][0]
+        predictions = Model.pipeline.transform(df)        
+        TransactionID, card1, probability = get_params(predictions)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     return {'TransactionID': TransactionID, 'cards1': card1, 'probability': probability}
+
+
+@app.post('/predict_batch')
+def predict_batch(batch_id: int, transactions: TransactionList):
+    data = pd.DataFrame([t.dict() for t in transactions.transactions])
+    data.fillna(value=np.nan, inplace=True, downcast=False)   
+
+    if Model.pipeline is None:
+        raise HTTPException(status_code=503, detail='No model loaded')
+    try:        
+        df = spark.createDataFrame(data)
+        predictions = Model.pipeline.transform(df)
+        suspicious_cards = get_k_suspicious_cards(predictions, k=50)
+
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return {'batch_id': batch_id, 'suspicious_cards': suspicious_cards}
